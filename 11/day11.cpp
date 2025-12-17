@@ -73,12 +73,21 @@ uint64_t count_paths(
     return dfs_memo(s3hash(start), connections, &paths_to_out);
 }
 
-uint64_t part1() {
+void part1() {
     const auto connections = parse_connections("input1.txt");
-    return count_paths("you", "out", connections);
+
+    auto start = chrono::high_resolution_clock::now();
+
+    auto count = count_paths("you", "out", connections);
+
+    auto end = chrono::high_resolution_clock::now();
+    chrono::duration<double, std::milli> ms_double = end - start;
+
+    cout << "Part 1: " << count;
+    cout << " in " << ms_double << "." << endl;
 }
 
-uint64_t part2() {
+void part2() {
     const auto connections = parse_connections("input2.txt");
 
     // We can reuse our solution for part 1.
@@ -88,25 +97,19 @@ uint64_t part2() {
 
     // ==        paths from (`svr` -> `fft`) * (`fft` -> `dac`) * (`dac -> out`)
     //         + paths from (`svr` -> `dac`) * (`dac` -> `fft`) * (`fft` -> out`)
-    return count_paths("svr", "fft", connections) * count_paths("fft", "dac", connections) * count_paths("dac", "out", connections)
+    auto start = chrono::high_resolution_clock::now();
+
+    auto count = count_paths("svr", "fft", connections) * count_paths("fft", "dac", connections) * count_paths("dac", "out", connections)
         + count_paths("svr", "dac", connections) * count_paths("dac", "fft", connections) * count_paths("fft", "out", connections);
+
+    auto end = chrono::high_resolution_clock::now();
+    chrono::duration<double, std::milli> ms_double = end - start;
+
+    cout << "Part 1: " << count;
+    cout << " in " << ms_double << "." << endl;
 }
 
 int main() {
-
-    auto start = chrono::high_resolution_clock::now();
-    auto count = part1();
-    auto end = chrono::high_resolution_clock::now();
-
-    chrono::duration<double, std::milli> ms_double = end - start;
-    cout << "Part 1: " << count;
-    cout << " in " << ms_double << " ms." << endl;
-
-    start = chrono::high_resolution_clock::now();
-    count = part2();
-    end = chrono::high_resolution_clock::now();
-
-    ms_double = end - start;
-    cout << "Part 2: " << count;
-    cout << " in " << ms_double << " ms." << endl;
+    part1();
+    part2();
 }
