@@ -1,15 +1,21 @@
 CXX = g++
 CXXFLAGS = -std=c++23 -Wall -Wextra -O2
 
-all: day10
+all: part1 part2
 
-day10: day10.cpp
-	$(CXX) $(CXXFLAGS) -o day10 day10.cpp
+part1: part1.cpp
+	$(CXX) $(CXXFLAGS) -o part1 part1.cpp
 
-run: day10
-	time ./day10
+part2: part2.cpp
+	$(CXX) $(CXXFLAGS) -o part2 part2.cpp
+
+run1: part1
+	time ./part1
+
+run2: part2
+	time ./part2
 
 clean:
-	rm -f day10
+	rm -f part1 part2
 
 .PHONY: all run clean
