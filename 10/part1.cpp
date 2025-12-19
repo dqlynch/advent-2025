@@ -87,7 +87,7 @@ vector<pair<mask16_t, vector<mask16_t>>> to_bitmasks(
     // Convert raw input to bitmasks:
     // We have a max pattern length of 10 (for input 1)
     // [.##...#.] -> 0b0000000001100010 = 98
-    // (0, 2, 3, 4) = [#.###] -> 0b0000000000010111 
+    // (0, 2, 3, 4) = [#.###] -> 0b0000000000010111
     mask16_t one = 1;
 
     for (const auto& line : raw_input) {
@@ -121,7 +121,7 @@ int bfs(mask16_t lights, const vector<mask16_t>& buttons) {
     queue<pair<int, mask16_t>> queue;    // <depth, current lights>
     queue.push(make_pair(0, 0));
 
-    // Our lights are max length 10, so we can fit all permutations in a 1024-length array, 
+    // Our lights are max length 10, so we can fit all permutations in a 1024-length array,
     // using the bitmask as an index directly
     char explored[1024];
     memset(explored, 0, 1024);
@@ -134,7 +134,7 @@ int bfs(mask16_t lights, const vector<mask16_t>& buttons) {
         if (current_lights == lights) {
             // We've reached our goal permutation
             return depth;
-        } 
+        }
 
         if (explored[current_lights]) {
             // Skip light permutations we've already explored - they cannot lead to an optimal solution
@@ -159,12 +159,12 @@ void part1() {
 
     const auto bitmasks = to_bitmasks(raw_input);
 
-    // Simple BFS until we find our end position, with some early 
+    // Simple BFS until we find our end position, with some early
     // return conditions to prevent cycling
     int count = 0;
     for (const auto& line : bitmasks) {
         count += bfs(line.first, line.second);
-    }    
+    }
 
     auto end = chrono::high_resolution_clock::now();
     chrono::duration<double, std::milli> ms_double = end - start;
