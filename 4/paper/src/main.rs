@@ -2,6 +2,7 @@ use std::env;
 use std::error::Error;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
+use std::time::Instant;
 
 fn parse_input(filename: &str) -> Result<Vec<Vec<u8>>, Box<dyn Error>> {
     let f = File::open(filename)?;
@@ -29,6 +30,7 @@ fn part1() {
     let filename = &args[1];
     let mut grid = parse_input(filename).expect("Should have been able to read input");
 
+    let start = Instant::now();
     let h = grid.len();
 
     let mut sum: u64 = 0;
@@ -65,6 +67,8 @@ fn part1() {
         sum = pass_sum;
     }
 
+    let elapsed = start.elapsed();
+    println!("Elapsed: {:?}", elapsed);
     println!("Sum: {sum}");
 }
 

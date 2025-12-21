@@ -1,4 +1,4 @@
-use std::{collections::HashSet, env};
+use std::{collections::HashSet, env, time::Instant};
 
 use elf_ids::{count_digits, parse_input, split_all_across_digits};
 
@@ -50,9 +50,11 @@ fn main() {
     let ranges = parse_input(filename).expect("Should be able to read the given filename");
 
     // Split across digit boundaries: [5-14] -> [5-9, 10-14]
+    let start = Instant::now();
     let ranges = split_all_across_digits(ranges);
 
     let sum = ranges.into_iter().flat_map(get_repeats).sum::<u64>();
 
-    println!("Part 2 sum: {sum}");
+    let elapsed = start.elapsed();
+    println!("Part 2 sum: {sum}, in {:?}", elapsed);
 }
